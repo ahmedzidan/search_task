@@ -14,6 +14,7 @@ How to run this project.
   - Now you ready to load data source and create indexing in elsatic search using this command.
   -     curl --user elastic:changeme -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/shakespeare/_bulk?pretty' --data-binary "@shakespeare.json"
   - take files and put in in your local machine if you are using xampp put them in xampp/htdocs/project_name/
+  - you will need to run this command "composer install"
   - open your favorite broweser and hit localhost/projectname/
   - you will find simple search input , type your search and hit Enter.
   - response will contain speaker and text.
