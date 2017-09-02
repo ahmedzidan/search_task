@@ -58,8 +58,8 @@
                     <template type="amp-mustache">
                         {{#content}}
                         <div class="search_result">
-                            <h1 id="speker">{{ speaker }}</h1>
-                            <p id="text">{{ text_entry }}</p>
+                            <h1 id="speker">{{{ speaker }}}</h1>
+                            <p id="text">{{{ text_entry }}}</p>
                         </div>
 
                         {{/content}}

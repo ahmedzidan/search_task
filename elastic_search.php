@@ -21,29 +21,51 @@ $client = ClientBuilder::create()
 
 $params = [
     'index' => 'shakespeare',
-    'type' => 'line',
+    "size" => 0,
     'body' => [
         'query' => [
-            'match' => [
+            'term' => [
                 'text_entry' => $query
             ]
         ],
-        "sort" => [
-            "speaker" => [
-                'order' => 'desc'
+        "aggs" => [
+            "groupBySpeaker" => [
+                "terms" => [
+                    "field" => "speaker",
+                ],
+                "aggs" => [
+                    "hits" => [
+                        "top_hits" => [
+                            "size" => 42,
+                        ],
+                    ]
+                ]
             ]
         ],
     ]
 ];
 $response = $client->search($params);
-$result = $response['hits']['hits'];
 
-$result_count = count($result);
+
+$results = $response['aggregations']['groupBySpeaker']['buckets'];
 $content = array();
-for ($i = 0; $i < $result_count; $i++) {
+foreach ($results as $result) {
+    $hits_results = $result['hits']['hits']['hits'];
+    $text_entry = "";
+    foreach ($hits_results as $key => $hits_result) {
+        if ($key == 0) {
+            $title = $hits_result['_source']['play_name'];
+            $title .= " | ";
+            $title .= $hits_result['_source']['speaker'];
+            $title .= "<br>";
+        }
+        $text_entry .= $hits_result['_source']['text_entry'];
+        $text_entry .= "<br>";
+    }
+
     $content[] = array(
-        'speaker' => $result[$i]['_source']['speaker'],
-        'text_entry' => $result[$i]['_source']['text_entry']
+        'speaker' => $title,
+        'text_entry' => $text_entry
     );
 }
 
