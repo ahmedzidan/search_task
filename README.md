@@ -6,7 +6,7 @@ How to run this project.
   - Run Elastic search from command line using this command 
   -      docker run -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1 docker.elastic.co/elasticsearch/elasticsearch:5.5.2 
   - Before Loading datasource you need to set up a mapping for the data using this command 
-  -     curl --user elastic:changeme -XPUT 'localhost:9200/shakespeare?pretty' -H 'Content-Type: application/json' -d '{"mappings" : { "_default_" : { "properties" : {    "speaker" : {"type": "keyword" },"play_name" : {"type":"keyword" },"line_id" : { "type" : "integer" },"speech_number" : {"type" : "integer" }   }  } }}'
+  -     curl --user elastic:changeme -XPUT 'localhost:9200/shakespeare?pretty' -H 'Content-Type: application/json' -d '{"mappings" : { "_default_" : { "properties" : {    "speaker" : {"type": "keyword" },"play_name" : {"type":"keyword" },"text_entry" : {"type":"text" },"line_id" : { "type" : "integer" },"speech_number" : {"type" : "integer" }   }  } }}'
   -     where elastic:changeme is the deault user of elsticsearch
 
   - Then download shakespeare data source using this command
